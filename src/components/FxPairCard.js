@@ -29,33 +29,46 @@ const FxPairCard = ({ card, onDelete, onRefresh, onSwap }) => {
     <div className="fx-pair-card">
       <div className="currency-pair">
         <span className="currency">{card.fromCurrency}</span>
-        <button onClick={onSwap} className="action-button">↕</button>
+        <button onClick={onSwap} className="action-button" disabled={card.isLoading}>↕</button>
         <span className="currency">{card.toCurrency}</span>
       </div>
       <div className="exchange-rate">
         {card.isLoading ? (
-          <span className="loader">Loading...</span>
+          <div className="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         ) : (
-          card.rate ? card.rate.toFixed(6) : 'N/A'
+          <span className="rate">{card.rate ? card.rate.toFixed(6) : 'N/A'}</span>
         )}
       </div>
-      <input
-        type="number"
-        value={fromAmount}
-        onChange={(e) => handleFromAmountChange(parseFloat(e.target.value))}
-        disabled={card.isLoading}
-      />
-      <input
-        type="number"
-        value={toAmount}
-        onChange={(e) => handleToAmountChange(parseFloat(e.target.value))}
-        disabled={card.isLoading}
-      />
+      <div className="conversion">
+        <input
+          type="number"
+          value={fromAmount}
+          onChange={(e) => handleFromAmountChange(parseFloat(e.target.value))}
+          disabled={card.isLoading}
+        />
+        <span>{card.fromCurrency}</span>
+      </div>
+      <div className="conversion">
+        <input
+          type="number"
+          value={toAmount}
+          onChange={(e) => handleToAmountChange(parseFloat(e.target.value))}
+          disabled={card.isLoading}
+        />
+        <span>{card.toCurrency}</span>
+      </div>
       <div className="actions">
-        <button onClick={onRefresh} className="action-button" disabled={card.isLoading}>
-          {card.isLoading ? '⏳' : '↻'}
+        <button onClick={onRefresh} className="action-button" disabled={card.isLoading} title="Refresh">
+          ↻
         </button>
-        <button onClick={onDelete} className="action-button" disabled={card.isLoading}>✕</button>
+        <button onClick={onDelete} className="action-button" disabled={card.isLoading} title="Delete">
+          ✕
+        </button>
       </div>
       <div className="last-updated">
         Last updated: {card.lastUpdated ? card.lastUpdated.toLocaleString() : 'Never'}
