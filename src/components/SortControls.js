@@ -1,39 +1,33 @@
+// src/components/SortControls.js
 import React from 'react';
 
 const SortControls = ({ sortCriteria, sortDirection, onSort }) => {
   const renderSortIcon = (criteria) => {
     if (sortCriteria === criteria) {
-      return sortDirection === 'asc' ? '↑' : '↓';
+      return sortDirection === 'asc' ? '▲' : '▼';
     }
-    return '↕';
+    return '▲▼';
   };
 
-  const buttonClass = (criteria) =>
-    `px-4 py-2 rounded-md transition duration-300 ease-in-out ${
-      sortCriteria === criteria
-        ? 'bg-blue-500 text-white shadow-md'
-        : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-    }`;
-
   return (
-    <div className="flex flex-wrap justify-center space-x-2 space-y-2 md:space-y-0">
+    <div className="sort-controls">
       <button
         onClick={() => onSort('created')}
-        className={buttonClass('created')}
+        className={`sort-button ${sortCriteria === 'created' ? 'active' : ''}`}
       >
-        Created {renderSortIcon('created')}
+        SORT BY CREATED {renderSortIcon('created')}
       </button>
       <button
         onClick={() => onSort('rate')}
-        className={buttonClass('rate')}
+        className={`sort-button ${sortCriteria === 'rate' ? 'active' : ''}`}
       >
-        FX Rate {renderSortIcon('rate')}
+        SORT BY FX RATE {renderSortIcon('rate')}
       </button>
       <button
         onClick={() => onSort('lastUpdated')}
-        className={buttonClass('lastUpdated')}
+        className={`sort-button ${sortCriteria === 'lastUpdated' ? 'active' : ''}`}
       >
-        Last Updated {renderSortIcon('lastUpdated')}
+        SORT BY LAST UPDATED {renderSortIcon('lastUpdated')}
       </button>
     </div>
   );
